@@ -1,0 +1,9 @@
+.tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.tabs:hover {
+    cursor: pointer;
+}
