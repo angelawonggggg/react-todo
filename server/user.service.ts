@@ -1,6 +1,7 @@
 import { Knex } from 'knex'; 
 import { comparePassword } from './hash'; 
 import jwtSimple from 'jwt-simple';
+import { JWTPayload, ReadingsOverview } from './model';
 
 
 export class UserService {
@@ -21,7 +22,7 @@ export class UserService {
             throw new Error('Wrong username or password')
         }
 
-        let payload = {
+        let payload: JWTPayload = {
             id: row.id,
             username,
         }
@@ -30,8 +31,8 @@ export class UserService {
         return token
     };
 
-    getReadings(user_id:number): Promise<> {
-        return this.knex.select('id', 'title', 'content').from('readings').where({'user_id'});
+    getReadings(user_id:number): Promise<ReadingsOverview[]> {
+        return this.knex.select('id', 'title', 'content').from('readings').where({user_id});
     }
 }
 
