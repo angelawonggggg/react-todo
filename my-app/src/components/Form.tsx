@@ -1,63 +1,57 @@
-import { count } from "console";
-import React, { FormEvent, useEffect, useState } from "react";
-import { useForm, useFormState } from "react-hook-form";
-
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 type FormState = {
-  name: string;
+  vocab: string;
   gender: string;
-  peopleList: [];
 };
 
 export default function Form() {
-  const { register, handleSubmit, getValues } = useForm({
+  const { handleSubmit, register } = useForm({
     defaultValues: {
-      name: "",
+      vocab: "",
       gender: "",
     },
   });
 
-  const [peopleList, setPeopleList] = useState([
-    { name: "Celine", gender: "F" },
-    { name: "Emilie", gender: "F" }]
-  );
+  const [vocabList, setVocabList] = useState<FormState[]>([]);
 
-  function submit(people: FormState) {
-    let newPeopleList = peopleList.concat([people]);
-    setPeopleList(newPeopleList);
+  function onSubmit(vocab: FormState) {
+    if (vocabList) {
+      let newVocabList = vocabList.concat(vocab);
+      setVocabList(newVocabList);
+    }
   }
-
-  // const formData = JSON.stringify(peopleList);
 
   return (
     <div>
-      <form onSubmit={handleSubmit(submit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label>
-          Name:
-          <input
-            {...register("name", { required: true, pattern: /^[A-Za-z]+$/i })}
-          />
+          Noun:
+          <input {...register("vocab", { required: true })} />
         </label>
 
         <label>
-          Gender:
+          Genre:
           <select {...register("gender")}>
-            <option value="F">F</option>
-            <option value="M">M</option>
-            <option value="Prefer not to say">Prefer not to say</option>
+            <option value="F">Féminin</option>
+            <option value="M">Masculin</option>
           </select>
         </label>
 
-        <input type="submit" value="submit"/>
+        <input type="submit" value="submit" />
       </form>
 
-      <pre>
-        peopleList:
-        {JSON.stringify(peopleList)}
-      </pre>
-
-      <div className="smallCard">
-        {getValues("name")}({getValues("gender")})
+      <div className="vocabCardContainer">
+        {vocabList
+          ? vocabList.map((vocab) => {
+              return (
+                <div className="vocabCard">
+                  {vocab.vocab}({vocab.gender})
+                </div>
+              );
+            })
+          : null}
       </div>
     </div>
   );

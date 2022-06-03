@@ -1,26 +1,17 @@
 import ToDoItem from "./ToDoItem";
-import Form from "./Form";
-import React, { useState } from "react";
-// import { Switch, Route } from 'react-router-dom'
-import NavBar from "./NavBar";
-import Login from "./Login";
+import React from "react";
 
-import "../App.css";
-
-// type Props = {
-//   name: string;
-// };
+type ToDoListType = {
+  itemList: string[];
+  text: string;
+  completedItem: string[];
+};
 
 export default class ToDoList extends React.Component {
-  state = {
-    itemList: ["Buy milk", "Buy banana", "Buy beef"],
+  state: ToDoListType = {
+    itemList: [],
     text: "",
-    completedItem: ["Coding"],
-    // peopleList: [
-    //   { name: "Celine", gender: "F" },
-    //   { name: "Emilie", gender: "F" },
-    // ],
-    // people: "",
+    completedItem: [],
   };
 
   removeItem(itemToRemove: string) {
@@ -44,19 +35,6 @@ export default class ToDoList extends React.Component {
     }
   }
 
-  // addPeople() {
-  //   this.setState({
-  //     peopleList: [...this.state.peopleList, this.state.people],
-  //     people: "",
-  //   });
-  // }
-
-  // setPeople(value: string) {
-  //   this.setState({
-  //     people: value,
-  //   });
-  // }
-
   setText(value: string) {
     this.setState({
       text: value,
@@ -74,20 +52,9 @@ export default class ToDoList extends React.Component {
   render() {
     return (
       <div>
-        <NavBar />
-        {/* <switch>
-          <Route path="secondPage" component={SecondPage} />
-
-          </switch> */}
-
         <div className="container">
           <div className="card">
-            <h2>Login</h2>
-            <Login />
-          </div>
-
-          <div className="card">
-            <h2>Beeno's to do list</h2>
+            <h2>My to do list</h2>
 
             <input
               value={this.state.text}
@@ -117,10 +84,10 @@ export default class ToDoList extends React.Component {
             ))}
           </div>
 
-          <div className="card">
-            <h2>Form</h2>
+          {/* <div className="card">
+            <h2>My vocabs</h2>
             <Form />
-          </div>
+          </div> */}
         </div>
       </div>
     );
